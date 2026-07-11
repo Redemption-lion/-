@@ -61,6 +61,7 @@
 ---
 
 ## 项目结构
+```plaintext
 gym-management/
 ├── src/
 │ └── main/
@@ -108,6 +109,7 @@ gym-management/
 │ ├── memberList/
 │ └── teachRecord/
 └── images/ # 图标资源
+```
 
 ---
 
