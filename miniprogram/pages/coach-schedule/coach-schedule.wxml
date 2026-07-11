@@ -1,0 +1,83 @@
+<view class="container">
+  <!-- 选项卡 -->
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 'upcoming' ? 'active' : ''}}" data-tab="upcoming" bindtap="switchTab">
+      即将上课
+    </view>
+    <view class="tab-item {{activeTab === 'history' ? 'active' : ''}}" data-tab="history" bindtap="switchTab">
+      历史课程
+    </view>
+  </view>
+
+  <!-- 即将上课列表 -->
+  <view class="course-list" wx:if="{{activeTab === 'upcoming'}}">
+    <block wx:for="{{upcomingCourses}}" wx:key="id">
+      <view class="course-card" data-id="{{item.id}}" bindtap="showMembers">
+        <view class="course-header">
+          <text class="course-name">{{item.courseName}}</text>
+          <text class="status status-future">即将开始</text>
+        </view>
+        <view class="course-info">
+          <text class="time">⏰ {{formatDate(item.startTime)}}</text>
+          <text class="duration">⏱️ {{item.duration}}分钟</text>
+        </view>
+        <view class="course-stats">
+          <text>👥 预约人数：{{item.bookedCount}} / {{item.maxCapacity}}</text>
+          <text wx:if="{{isFull(item)}}" class="full-tag">已满</text>
+        </view>
+        <view class="view-more">点击查看学员名单 ></view>
+      </view>
+    </block>
+    <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+    <view class="no-more" wx:if="{{!hasMore && upcomingCourses.length > 0}}">没有更多了</view>
+    <view class="empty" wx:if="{{!loading && upcomingCourses.length === 0}}">暂无即将开始的课程</view>
+  </view>
+
+  <!-- 历史课程列表 -->
+  <view class="course-list" wx:if="{{activeTab === 'history'}}">
+    <block wx:for="{{historyCourses}}" wx:key="id">
+      <view class="course-card history-card" data-id="{{item.id}}" bindtap="showMembers">
+        <view class="course-header">
+          <text class="course-name">{{item.courseName}}</text>
+          <text class="status status-past">已结束</text>
+        </view>
+        <view class="course-info">
+          <text class="time">⏰ {{formatDate(item.startTime)}}</text>
+          <text class="duration">⏱️ {{item.duration}}分钟</text>
+        </view>
+        <view class="course-stats">
+          <text>👥 预约人数：{{item.bookedCount}} / {{item.maxCapacity}}</text>
+        </view>
+        <view class="view-more">点击查看学员名单 ></view>
+      </view>
+    </block>
+    <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+    <view class="no-more" wx:if="{{!hasMore && historyCourses.length > 0}}">没有更多了</view>
+    <view class="empty" wx:if="{{!loading && historyCourses.length === 0}}">暂无历史课程</view>
+  </view>
+
+  <!-- 学员弹窗（与之前相同） -->
+  <view class="modal-mask" wx:if="{{showMemberDialog}}" bindtap="closeMemberDialog"></view>
+  <view class="modal-container" wx:if="{{showMemberDialog}}">
+    <view class="modal-header">
+      <text>{{selectedCourse.courseName}} - 学员名单</text>
+      <text class="close" bindtap="closeMemberDialog">✕</text>
+    </view>
+    <view class="modal-body">
+      <block wx:if="{{membersLoading}}">
+        <view class="loading-text">加载中...</view>
+      </block>
+      <block wx:else>
+        <view wx:for="{{members}}" wx:key="id" class="member-item">
+          <text class="member-name">{{item.name}}</text>
+          <text class="member-phone">{{item.phone}}</text>
+          <text class="member-remark" wx:if="{{item.remark}}">备注：{{item.remark}}</text>
+        </view>
+        <view wx:if="{{members.length === 0}}" class="empty-members">暂无已确认预约学员</view>
+      </block>
+    </view>
+    <view class="modal-footer">
+      <button class="btn-close" bindtap="closeMemberDialog">关闭</button>
+    </view>
+  </view>
+</view>

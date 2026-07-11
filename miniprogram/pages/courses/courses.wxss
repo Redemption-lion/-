@@ -1,0 +1,153 @@
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 20rpx;
+}
+
+/* 搜索栏 */
+.search-bar {
+  background: #fff;
+  margin: 20rpx;
+  padding: 16rpx 24rpx;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.search-bar input {
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.search-icon {
+  font-size: 32rpx;
+  color: #999;
+}
+
+/* 筛选栏 */
+.filter-bar {
+  white-space: nowrap;
+  padding: 0 20rpx;
+}
+
+.filter-options {
+  display: inline-flex;
+  gap: 20rpx;
+}
+
+.filter-item {
+  display: inline-block;
+  padding: 12rpx 32rpx;
+  background: #fff;
+  border-radius: 48rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.filter-item.active {
+  background: #1296db;
+  color: #fff;
+}
+
+/* 课程列表 */
+.course-list {
+  padding: 20rpx;
+}
+
+.course-item {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.course-item image {
+  width: 200rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+}
+
+.course-content {
+  flex: 1;
+  padding: 20rpx;
+  position: relative;
+}
+
+.course-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.course-difficulty {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  display: inline-block;
+  margin-bottom: 12rpx;
+}
+
+/* 难度标签 - 使用英文类名 */
+.difficulty-beginner {
+  background: #e6f7e6;
+  color: #4caf50;
+}
+
+.difficulty-intermediate {
+  background: #fff3e0;
+  color: #ff9800;
+}
+
+.difficulty-advanced {
+  background: #ffe0e0;
+  color: #f44336;
+}
+
+.course-time {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.course-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.course-price {
+  font-size: 32rpx;
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.course-status {
+  font-size: 24rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+}
+
+.status-active {
+  background: #e6f7e6;
+  color: #4caf50;
+}
+
+.status-end {
+  background: #f0f0f0;
+  color: #999;
+}
+
+/* 加载状态 */
+.loading-more,
+.no-more,
+.empty {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 26rpx;
+}

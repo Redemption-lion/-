@@ -1,0 +1,69 @@
+<view class="login-container">
+  <!-- 顶部Tab -->
+  <view class="tabs">
+    <view class="tab-item {{activeTab === 'login' ? 'active' : ''}}" 
+          data-tab="login" bindtap="switchTab">登录</view>
+    <view class="tab-item {{activeTab === 'register' ? 'active' : ''}}" 
+          data-tab="register" bindtap="switchTab">注册</view>
+  </view>
+
+  <!-- 角色选择 -->
+  <view class="role-select">
+    <view class="role-item {{selectedRole === 'member' ? 'active' : ''}}" 
+          data-role="member" bindtap="selectRole">
+      <text>🏃 会员登录</text>
+    </view>
+    <view class="role-item {{selectedRole === 'coach' ? 'active' : ''}}" 
+          data-role="coach" bindtap="selectRole">
+      <text>📋 教练登录</text>
+    </view>
+  </view>
+
+  <!-- 登录表单 -->
+  <view class="form-container" wx:if="{{activeTab === 'login'}}">
+    <view class="input-group">
+      <input class="input" placeholder="{{selectedRole === 'member' ? '手机号' : '教练账号'}}" 
+             value="{{loginForm.username}}" bindinput="onLoginInput" data-field="username" />
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="密码" password="{{!showPassword}}"
+             value="{{loginForm.password}}" bindinput="onLoginInput" data-field="password" />
+      <view class="eye-icon" bindtap="togglePassword">
+        <text>{{showPassword ? '👁️' : '👁️‍🗨️'}}</text>
+      </view>
+    </view>
+    <button class="login-btn" bindtap="handleLogin">
+      {{selectedRole === 'member' ? '会员登录' : '教练登录'}}
+    </button>
+  </view>
+
+  <!-- 注册表单（仅会员） -->
+  <view class="form-container" wx:if="{{activeTab === 'register'}}">
+    <view class="input-group">
+      <input class="input" placeholder="手机号" value="{{registerForm.phone}}" 
+             bindinput="onRegisterInput" data-field="phone" />
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="昵称" value="{{registerForm.nickname}}" 
+             bindinput="onRegisterInput" data-field="nickname" />
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="真实姓名（选填）" value="{{registerForm.realName}}" 
+             bindinput="onRegisterInput" data-field="realName" />
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="密码" password="{{!showPassword}}"
+             value="{{registerForm.password}}" bindinput="onRegisterInput" data-field="password" />
+    </view>
+    <view class="input-group">
+      <input class="input" placeholder="确认密码" password="{{!showPassword}}"
+             value="{{registerForm.confirmPassword}}" bindinput="onRegisterInput" data-field="confirmPassword" />
+    </view>
+    <view class="privacy">
+      <view class="checkbox {{agreePrivacy ? 'checked' : ''}}" bindtap="togglePrivacy"></view>
+      <text>我已阅读并同意</text>
+      <text class="privacy-link" bindtap="viewPrivacy">《隐私协议》</text>
+    </view>
+    <button class="login-btn" bindtap="handleRegister">注册新会员</button>
+  </view>
+</view>

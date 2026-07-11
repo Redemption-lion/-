@@ -1,0 +1,61 @@
+<view class="container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">意见反馈</text>
+    <button class="btn-add" bindtap="showFormDialog">+ 写反馈</button>
+  </view>
+
+  <!-- 反馈列表 -->
+  <view class="feedback-list">
+    <view class="feedback-item" wx:for="{{feedbacks}}" wx:key="id">
+      <view class="item-header">
+        <text class="title">{{item.title}}</text>
+        <text class="status {{item.status === '已处理' ? 'status-done' : 'status-pending'}}">
+          {{item.status}}
+        </text>
+      </view>
+      <text class="content">{{item.content}}</text>
+      <view class="item-footer">
+        <text class="time">{{item.addtime}}</text>
+        <text class="user-type" wx:if="{{item.userType === 'member'}}">会员</text>
+        <text class="user-type" wx:if="{{item.userType === 'coach'}}">教练</text>
+      </view>
+      <view class="reply" wx:if="{{item.replyContent}}">
+        <text class="reply-label">回复：</text>
+        <text class="reply-content">{{item.replyContent}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty" wx:if="{{!loading && feedbacks.length === 0}}">
+    <text>暂无反馈记录</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && feedbacks.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+
+  <!-- 弹窗表单 -->
+  <view class="modal-mask" wx:if="{{showForm}}" bindtap="hideFormDialog"></view>
+  <view class="modal-form" wx:if="{{showForm}}">
+    <view class="modal-header">
+      <text>发表反馈</text>
+      <text class="close" bindtap="hideFormDialog">✕</text>
+    </view>
+    <view class="modal-body">
+      <input class="input" placeholder="标题" value="{{form.title}}" 
+             bindinput="onFormInput" data-field="title" />
+      <textarea class="textarea" placeholder="请详细描述您的问题或建议..." 
+                value="{{form.content}}" bindinput="onFormInput" data-field="content" />
+    </view>
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="hideFormDialog">取消</button>
+      <button class="btn-submit" bindtap="submitFeedback">提交</button>
+    </view>
+  </view>
+</view>

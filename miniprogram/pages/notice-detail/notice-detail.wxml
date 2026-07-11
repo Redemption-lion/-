@@ -1,0 +1,17 @@
+<view class="container" wx:if="{{!loading && notice}}">
+  <view class="notice-card">
+    <text class="title">{{notice.title}}</text>
+    <view class="info">
+      <text>📅 {{notice.createTime}}</text>
+      <text>👁️ {{notice.viewCount}}次阅读</text>
+    </view>
+    <view class="divider"></view>
+    <view class="content">
+      <rich-text nodes="{{notice.content}}"></rich-text>
+    </view>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

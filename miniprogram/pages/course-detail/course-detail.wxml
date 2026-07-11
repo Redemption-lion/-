@@ -1,0 +1,73 @@
+<view class="container" wx:if="{{!loading && course}}">
+  <!-- 封面图 -->
+  <image class="cover" src="{{course.cover || '/images/default-course.png'}}" mode="aspectFill"></image>
+  
+  <!-- 课程信息 -->
+  <view class="info-card">
+    <text class="course-name">{{course.courseName}}</text>
+    <view class="tags">
+      <text class="tag difficulty-{{course.difficulty === '初级' ? 'beginner' : course.difficulty === '中级' ? 'intermediate' : 'advanced'}}">
+        {{course.difficulty}}
+      </text>
+      <text class="tag category">{{course.category}}</text>
+      <text class="tag status-active" wx:if="{{course.status === '正常'}}">正常</text>
+<text class="tag status-cancelled" wx:if="{{course.status === '已取消'}}">已取消</text>
+<text class="tag status-ended" wx:if="{{course.status === '已结束'}}">已结束</text>
+    </view>
+    <view class="price-row">
+      <text class="price">¥{{course.price}}</text>
+      <text class="original-price" wx:if="{{course.originalPrice}}">¥{{course.originalPrice}}</text>
+    </view>
+  </view>
+
+  <!-- 课程详情 -->
+  <view class="detail-card">
+    <view class="detail-item">
+      <text class="label">⏰ 课程时间</text>
+      <text class="value">{{course.startTime}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">⏱️ 课程时长</text>
+      <text class="value">{{course.duration}}分钟</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">👥 预约人数</text>
+      <text class="value">{{course.bookedCount}}/{{course.maxCapacity}}</text>
+      <progress percent="{{course.bookedCount / course.maxCapacity * 100}}" stroke-width="4" activeColor="#1296db" />
+    </view>
+    <view class="detail-item">
+      <text class="label">📝 课程介绍</text>
+      <text class="value desc">{{course.description || '暂无介绍'}}</text>
+    </view>
+  </view>
+
+  <!-- 教练信息 -->
+  <view class="coach-card" wx:if="{{course.coachId}}">
+    <text class="title">授课教练</text>
+    <view class="coach-info">
+      <image src="{{course.coachAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="coach-detail">
+        <text class="coach-name">{{course.coachName || '资深教练'}}</text>
+        <text class="coach-bio">{{course.coachBio || '专业认证教练'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar">
+    <view class="action-btn" wx:if="{{isMember}}">
+      <button class="btn {{hasBooked ? 'btn-cancel' : 'btn-book'}}" 
+              bindtap="handleBooking" 
+              disabled="{{buttonDisabled}}">
+        {{buttonText}}
+      </button>
+    </view>
+    <view class="action-btn" wx:if="{{isCoach}}">
+      <button class="btn btn-edit" bindtap="editCourse">编辑课程</button>
+    </view>
+  </view>
+</view>
+
+<view class="loading" wx:if="{{loading}}">
+  <text>加载中...</text>
+</view>

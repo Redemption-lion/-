@@ -1,0 +1,135 @@
+<view class="container">
+  <!-- 顶部信息 -->
+  <view class="header">
+    <view class="greeting">
+      <text class="hello">你好，</text>
+      <text class="name">{{role === 'member' ? (userInfo.nickname || '会员') : (coachInfo.coachName || '教练')}}</text>
+    </view>
+    <view class="avatar" bindtap="goToProfile">
+      <image src="{{userInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+    </view>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image src="{{item.image}}" mode="aspectFill"></image>
+    </swiper-item>
+  </swiper>
+
+  <!-- ========== 会员端首页 ========== -->
+  <block wx:if="{{role === 'member'}}">
+    <!-- 快捷入口（两列网格） -->
+    <view class="quick-entry grid-2">
+      <view class="entry-item" bindtap="goToCourses">
+        <view class="entry-icon">📅</view>
+        <text>预约课程</text>
+      </view>
+      <view class="entry-item" bindtap="goToMyBookings">
+        <view class="entry-icon">📋</view>
+        <text>我的预约</text>
+      </view>
+      <view class="entry-item" bindtap="goToFeedback">
+        <view class="entry-icon">💬</view>
+        <text>意见反馈</text>
+      </view>
+      <view class="entry-item" bindtap="goToNotices">
+        <view class="entry-icon">📢</view>
+        <text>公告资讯</text>
+      </view>
+    </view>
+
+    <!-- 热门推荐 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="title">热门推荐</text>
+        <text class="more" bindtap="goToCourses">查看更多 ></text>
+      </view>
+      <view class="course-list">
+        <view class="course-card" wx:for="{{hotCourses}}" wx:key="id" bindtap="goToCourseDetail" data-id="{{item.id}}">
+          <image src="{{item.cover || '/images/default-course.png'}}" mode="aspectFill"></image>
+          <view class="course-info">
+            <text class="course-name">{{item.courseName}}</text>
+            <text class="course-time">⏰ {{item.startTime}}</text>
+            <text class="course-price">¥{{item.price}}</text>
+          </view>
+        </view>
+      </view>
+      <view wx:if="{{hotCourses.length === 0}}" class="empty">暂无热门课程</view>
+    </view>
+
+    <!-- 最新公告 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="title">最新公告</text>
+        <text class="more" bindtap="goToNotices">查看更多 ></text>
+      </view>
+      <view class="notice-list">
+        <view class="notice-item" wx:for="{{notices}}" wx:key="id" bindtap="goToNoticeDetail" data-id="{{item.id}}">
+          <text class="notice-title">{{item.title}}</text>
+          <text class="notice-time">{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ========== 教练端首页 ========== -->
+  <block wx:if="{{role === 'coach'}}">
+    <!-- 教练信息卡片 -->
+    <view class="coach-card">
+      <image src="{{coachInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="coach-detail">
+        <text class="coach-name">{{coachInfo.coachName}}</text>
+        <text class="coach-bio">{{coachInfo.bio || '资深健身教练'}}</text>
+      </view>
+    </view>
+
+    <!-- 功能入口 -->
+    <view class="quick-entry coach-entry">
+      <view class="entry-item" bindtap="goToCourseManage">
+        <view class="entry-icon">📝</view>
+        <text>课程管理</text>
+      </view>
+      <view class="entry-item" bindtap="goToBookingAudit">
+        <view class="entry-icon">✅</view>
+        <text>预约审核</text>
+      </view>
+      <view class="entry-item" bindtap="goToMyCourses">
+        <view class="entry-icon">📅</view>
+        <text>我的课程</text>
+      </view>
+      <view class="entry-item" bindtap="goToFeedback">
+        <view class="entry-icon">💬</view>
+        <text>查看评价</text>
+      </view>
+    </view>
+
+    <!-- 今日课程 -->
+    <view class="section">
+      <view class="section-header">
+        <text class="title">今日课程</text>
+        <text class="more" bindtap="goToMyCourses">全部 ></text>
+      </view>
+      <view class="today-course-list">
+        <view class="today-course-item" wx:for="{{todayCourses}}" wx:key="id" bindtap="goToCourseDetail" data-id="{{item.id}}">
+          <text class="course-name">{{item.courseName}}</text>
+          <text class="course-time">{{item.startTime}}</text>
+          <text class="course-count">已约 {{item.bookedCount}}/{{item.maxCapacity}}</text>
+        </view>
+      </view>
+      <view wx:if="{{todayCourses.length === 0}}" class="empty">今日暂无课程</view>
+    </view>
+
+    <!-- 统计卡片 -->
+    <view class="stats-row">
+      <view class="stat-card">
+        <text class="stat-num">{{coachInfo.courseCount || 0}}</text>
+        <text class="stat-label">已发布课程</text>
+      </view>
+      <view class="stat-card">
+        <text class="stat-num">{{coachInfo.totalBookings || 0}}</text>
+        <text class="stat-label">累计预约</text>
+      </view>
+    </view>
+  </block>
+</view>

@@ -1,0 +1,84 @@
+<view class="container">
+  <view class="form-card">
+    <view class="form-item">
+      <text class="label">课程名称 <text class="required">*</text></text>
+      <input class="input" placeholder="请输入课程名称" 
+             value="{{form.courseName}}" bindinput="onInput" data-field="courseName" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">课程分类</text>
+      <picker mode="selector" range="{{categoryOptions}}" bindchange="onCategoryChange">
+        <view class="picker">{{form.category}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">课程封面</text>
+      <view class="upload-area" bindtap="uploadCover">
+        <image wx:if="{{form.cover}}" src="{{form.cover}}" mode="aspectFill"></image>
+        <view wx:else class="upload-placeholder">
+          <text>+</text>
+          <text class="upload-text">点击上传封面</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 日期选择（日历样式） -->
+    <view class="form-item">
+      <text class="label">课程日期 <text class="required">*</text></text>
+      <picker mode="date" value="{{dateValue}}" bindchange="onDateChange">
+        <view class="picker">{{dateValue || '请选择日期'}}</view>
+      </picker>
+    </view>
+
+    <!-- 时间选择（滚轮样式） -->
+    <view class="form-item">
+      <text class="label">课程时间 <text class="required">*</text></text>
+      <picker mode="time" value="{{timeValue}}" bindchange="onTimeChange">
+        <view class="picker">{{timeValue || '请选择时间'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item half">
+        <text class="label">课程时长(分钟)</text>
+        <picker mode="selector" range="{{[30,45,60,90,120]}}" bindchange="onDurationChange">
+          <view class="picker">{{form.duration}}分钟</view>
+        </picker>
+      </view>
+      <view class="form-item half">
+        <text class="label">最大预约人数</text>
+        <picker mode="selector" range="{{[5,10,15,20,30,50]}}" bindchange="onCapacityChange">
+          <view class="picker">{{form.maxCapacity}}人</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item half">
+        <text class="label">课程难度</text>
+        <picker mode="selector" range="{{difficultyOptions}}" bindchange="onDifficultyChange">
+          <view class="picker">{{form.difficulty}}</view>
+        </picker>
+      </view>
+      <view class="form-item half">
+        <text class="label">课程价格(元) <text class="required">*</text></text>
+        <input class="input" type="digit" placeholder="请输入价格" 
+               value="{{form.price}}" bindinput="onInput" data-field="price" />
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">课程介绍</text>
+      <textarea class="textarea" placeholder="请输入课程介绍" 
+                value="{{form.description}}" bindinput="onInput" data-field="description" />
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <button class="btn-submit" bindtap="submitForm">
+      {{isEdit ? '保存修改' : '发布课程'}}
+    </button>
+  </view>
+</view>

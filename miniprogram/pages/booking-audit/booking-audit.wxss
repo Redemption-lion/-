@@ -1,0 +1,110 @@
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 20rpx;
+}
+
+.stats {
+  background: #fff;
+  padding: 20rpx 30rpx;
+  font-size: 26rpx;
+  color: #666;
+  border-bottom: 1rpx solid #eee;
+}
+
+.booking-list {
+  padding: 20rpx;
+}
+
+.booking-item {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.member-name {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.status {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.status-confirmed {
+  background: #e6f7e6;
+  color: #4caf50;
+}
+
+.status-cancelled {
+  background: #f0f0f0;
+  color: #999;
+}
+
+.status-pending {
+  background: #fff3e0;
+  color: #ff9800;
+}
+
+.course-name {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.info-text {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.item-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 16rpx;
+}
+
+.btn-approve, .btn-reject, .btn-contact {
+  flex: 1;
+  height: 64rpx;
+  font-size: 26rpx;
+  border-radius: 32rpx;
+  border: none;
+}
+
+.btn-approve {
+  background: #e6f7e6;
+  color: #4caf50;
+}
+
+.btn-reject {
+  background: #ffe0e0;
+  color: #f44336;
+}
+
+.btn-contact {
+  background: #e3f2fd;
+  color: #2196f3;
+}
+
+.empty, .loading {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+  font-size: 28rpx;
+}

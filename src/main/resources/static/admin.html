@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>健身房管理后台</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<h2>管理员后台（演示）</h2>
+<div>
+    <h3>所有预约记录</h3>
+    <button onclick="loadBookings()">刷新</button>
+    <pre id="bookings"></pre>
+</div>
+<script>
+    // 注意：你需要先手动在浏览器控制台设置 token，或者从登录接口获取后填入
+    const token = "eyJhbGciOiJIUzI1NiJ9..."; // 实际使用时，先登录复制token
+    function loadBookings() {
+        axios.get('http://localhost:8080/api/course/myBookings', {
+            headers: { token: token }
+        }).then(res => {
+            document.getElementById('bookings').innerText = JSON.stringify(res.data, null, 2);
+        });
+    }
+</script>
+</body>
+</html>

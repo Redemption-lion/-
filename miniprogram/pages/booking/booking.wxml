@@ -1,0 +1,45 @@
+<view class="container">
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <picker mode="selector" range="{{statusOptions}}" bindchange="onStatusChange">
+      <view class="filter-picker">
+        <text>{{statusFilter}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 预约列表 -->
+  <view class="booking-list">
+    <view class="booking-item" wx:for="{{bookings}}" wx:key="id">
+      <view class="item-header">
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="status {{item.status === '已确认' ? 'status-confirmed' : item.status === '已取消' ? 'status-cancelled' : 'status-completed'}}">
+          {{item.status}}
+        </text>
+      </view>
+      <view class="item-info">
+        <text class="info-text">预约时间：{{item.bookingTime}}</text>
+        <text class="info-text">预约编号：{{item.bookingNo}}</text>
+      </view>
+      <view class="item-actions">
+        <button class="btn-view" bindtap="goToCourse" data-course-id="{{item.courseId}}">查看课程</button>
+        <button class="btn-cancel" wx:if="{{item.status === '已确认'}}" 
+                bindtap="cancelBooking" data-id="{{item.id}}" data-course-name="{{item.courseName}}">
+          取消预约
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+  <view class="no-more" wx:if="{{!hasMore && bookings.length > 0}}">
+    <text>没有更多了</text>
+  </view>
+  <view class="empty" wx:if="{{!loading && bookings.length === 0}}">
+    <text>暂无预约记录</text>
+  </view>
+</view>

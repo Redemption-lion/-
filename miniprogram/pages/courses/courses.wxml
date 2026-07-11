@@ -1,0 +1,43 @@
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索课程名称" bindinput="onSearchInput" bindconfirm="onSearch" />
+    <text class="search-icon" bindtap="onSearch">🔍</text>
+  </view>
+
+  <!-- 筛选栏：难度选项（水平滚动） -->
+  <scroll-view class="filter-bar" scroll-x>
+    <view class="filter-options">
+      <view wx:for="{{difficultyOptions}}" wx:key="*this" 
+            class="filter-item {{selectedDifficulty === item ? 'active' : ''}}"
+            data-index="{{index}}" bindtap="onDifficultyChange">
+        {{item}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 课程列表 -->
+  <view class="course-list">
+    <view class="course-item" wx:for="{{courses}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="course-img" src="{{item.cover || '/images/default-course.png'}}" mode="aspectFill"></image>
+      <view class="course-content">
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="course-difficulty {{item.difficulty === '初级' ? 'difficulty-beginner' : item.difficulty === '中级' ? 'difficulty-intermediate' : 'difficulty-advanced'}}">
+          {{item.difficulty}}
+        </text>
+        <text class="course-time">⏰ {{item.startTime}}</text>
+        <view class="course-bottom">
+          <text class="course-price">¥{{item.price}}</text>
+          <text class="course-status {{item.status === '正常' ? 'status-active' : 'status-end'}}">
+            {{item.status === '正常' ? '可预约' : '已结束'}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && courses.length > 0}}">没有更多了</view>
+  <view class="empty" wx:if="{{!loading && courses.length === 0}}">暂无课程</view>
+</view>

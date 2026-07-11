@@ -1,0 +1,50 @@
+<view class="container">
+  <!-- 头部按钮 -->
+  <view class="header-btn">
+    <button class="btn-add" bindtap="addCourse">+ 发布新课程</button>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <picker mode="selector" range="{{statusOptions}}" bindchange="onStatusChange">
+      <view class="filter-picker">
+        <text>状态：{{statusFilter}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 课程列表 -->
+  <view class="course-list">
+    <view class="course-item" wx:for="{{courses}}" wx:key="id">
+      <view class="item-header" bindtap="goToDetail" data-id="{{item.id}}">
+        <text class="course-name">{{item.courseName}}</text>
+        <text class="status {{item.status === '正常' ? 'status-active' : item.status === '已取消' ? 'status-cancelled' : 'status-ended'}}">
+          {{item.status}}
+        </text>
+      </view>
+      <view class="item-info" bindtap="goToDetail" data-id="{{item.id}}">
+        <text class="info-text">⏰ {{item.startTime}}</text>
+        <text class="info-text">⏱️ {{item.duration}}分钟</text>
+        <text class="info-text">👥 预约 {{item.bookedCount}}/{{item.maxCapacity}}</text>
+        <text class="info-text">💰 ¥{{item.price}}</text>
+      </view>
+      <view class="item-actions">
+        <button class="btn-bookings" bindtap="viewBookings" data-id="{{item.id}}">查看预约</button>
+        <button class="btn-edit" bindtap="editCourse" data-id="{{item.id}}">编辑</button>
+        <button class="btn-delete" wx:if="{{item.status === '正常'}}" 
+                bindtap="deleteCourse" data-id="{{item.id}}" data-name="{{item.courseName}}">
+          下架
+        </button>
+        <button class="btn-relist" wx:if="{{item.status === '已取消'}}" 
+                bindtap="relistCourse" data-id="{{item.id}}" data-name="{{item.courseName}}">
+          上架
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="loading-more" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{!hasMore && courses.length > 0}}">没有更多了</view>
+  <view class="empty" wx:if="{{!loading && courses.length === 0}}">暂无课程</view>
+</view>

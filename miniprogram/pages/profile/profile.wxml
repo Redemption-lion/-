@@ -1,0 +1,112 @@
+<view class="container">
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar" bindtap="{{isEditing ? 'uploadAvatar' : ''}}">
+      <image src="{{userInfo.avatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+      <view class="avatar-mask" wx:if="{{isEditing}}">
+        <text>换头像</text>
+      </view>
+    </view>
+    <view class="user-info">
+      <text class="username">{{userInfo.nickname || userInfo.coachName || userInfo.phone}}</text>
+      <text class="role-badge">{{role === 'member' ? '会员' : '教练'}}</text>
+    </view>
+    <view class="edit-btn" bindtap="toggleEdit">
+      <text>{{isEditing ? '取消' : '编辑'}}</text>
+    </view>
+  </view>
+
+  <!-- 编辑模式 -->
+  <view class="form-card" wx:if="{{isEditing}}">
+    <view class="form-item">
+      <text class="label">昵称</text>
+      <input class="input" placeholder="请输入昵称" 
+             value="{{editForm.nickname}}" bindinput="onInput" data-field="nickname" />
+    </view>
+    <view class="form-item" wx:if="{{role === 'member'}}">
+      <text class="label">真实姓名</text>
+      <input class="input" placeholder="请输入真实姓名" 
+             value="{{editForm.realName}}" bindinput="onInput" data-field="realName" />
+    </view>
+    <view class="form-item">
+      <text class="label">性别</text>
+      <picker mode="selector" range="{{genderOptions}}" bindchange="onGenderChange">
+        <view class="picker">{{editForm.gender}}</view>
+      </picker>
+    </view>
+    <button class="save-btn" bindtap="saveProfile">保存修改</button>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-list">
+    <view class="menu-item" wx:if="{{role === 'member'}}" bindtap="goToBookings">
+      <text class="icon">📋</text>
+      <text class="title">我的预约</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" wx:if="{{role === 'coach'}}" bindtap="goToMyCourses">
+      <text class="icon">📚</text>
+      <text class="title">我的课程</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" wx:if="{{role === 'coach'}}" bindtap="goToSchedule">
+      <text class="icon">📆</text>
+      <text class="title">上课记录</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" wx:if="{{role === 'coach'}}" bindtap="goToBookingAudit">
+      <text class="icon">✅</text>
+      <text class="title">预约审核</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToFeedback">
+      <text class="icon">💬</text>
+      <text class="title">意见反馈</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goToNotices">
+      <text class="icon">📢</text>
+      <text class="title">公告资讯</text>
+      <text class="arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="changePassword">
+      <text class="icon">🔒</text>
+      <text class="title">修改密码</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <!-- 教练专用功能 -->
+  <view class="menu-list" wx:if="{{role === 'coach'}}">
+    <view class="menu-item" bindtap="switchToMember">
+      <text class="icon">🔄</text>
+      <text class="title">切换会员视角</text>
+      <text class="arrow">></text>
+    </view>
+  </view>
+
+  <!-- 上课记录（仅会员） -->
+  <view class="section" wx:if="{{role === 'member'}}">
+    <view class="section-header">
+      <text class="title">上课记录</text>
+    </view>
+    <view class="fitness-list">
+      <block wx:for="{{fitnessDataList}}" wx:key="id">
+        <view class="fitness-item">
+          <text class="record-date">{{item.recordDate}}</text>
+          <text class="course-name">{{item.courseName || '课程'}}</text>
+          <text class="remark">{{item.remark || '已完成'}}</text>
+        </view>
+      </block>
+      <view wx:if="{{fitnessDataList.length === 0 && !fitnessDataLoading}}" class="empty">暂无上课记录</view>
+      <view wx:if="{{fitnessDataLoading}}" class="loading-text">加载中...</view>
+      <view wx:if="{{fitnessDataHasMore && !fitnessDataLoading && fitnessDataList.length > 0}}" class="load-more" bindtap="loadMoreFitnessData">点击加载更多</view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="footer">
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+    <text class="version" bindtap="showAbout">版本 v1.0.0</text>
+  </view>
+</view>

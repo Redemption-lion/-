@@ -1,0 +1,46 @@
+<view class="container">
+  <view class="stats" wx:if="{{bookings.length > 0}}">
+    <text>共 {{bookings.length}} 条预约记录</text>
+  </view>
+
+  <view class="booking-list">
+    <view class="booking-item" wx:for="{{bookings}}" wx:key="id">
+      <view class="item-header">
+        <text class="member-name">{{item.memberName}}</text>
+        <text class="status {{item.status === '已确认' ? 'status-confirmed' : item.status === '已取消' ? 'status-cancelled' : 'status-pending'}}">
+          {{item.status}}
+        </text>
+      </view>
+
+      <view class="item-info" wx:if="{{!courseId}}">
+        <text class="course-name">课程：{{item.courseName}}</text>
+      </view>
+
+      <view class="item-info">
+        <text class="info-text">预约时间：{{item.bookingTime || '未知'}}</text>
+        <text class="info-text" wx:if="{{item.remark}}">备注：{{item.remark}}</text>
+        <text class="info-text" wx:if="{{item.auditRemark}}">审核备注：{{item.auditRemark}}</text>
+      </view>
+
+      <view class="item-actions" wx:if="{{item.status === '待审核'}}">
+        <button class="btn-approve" bindtap="approveBooking"
+                data-id="{{item.id}}" data-member-name="{{item.memberName}}">通过</button>
+        <button class="btn-reject" bindtap="rejectBooking"
+                data-id="{{item.id}}" data-member-name="{{item.memberName}}">拒绝</button>
+      </view>
+
+      <view class="item-actions" wx:elif="{{item.status === '已确认'}}">
+        <button class="btn-contact" open-type="makePhoneCall"
+                data-phone="{{item.memberPhone}}">📞 联系会员</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!loading && bookings.length === 0}}">
+    <text>暂无预约记录</text>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
