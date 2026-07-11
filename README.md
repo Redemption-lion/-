@@ -168,6 +168,7 @@ globalData: {
 
 ### 主要接口
 |接口 |方法|说明|
+|------|------|------|
 |/api/member/login|	POST|	会员登录|
 |/api/member/book|	POST|	预约课程|
 |/api/member/cancel|	POST|	取消预约|
@@ -187,18 +188,19 @@ globalData: {
 
 
 ### 数据库表结构
-表名	说明
-admin	管理员表
-coach	教练表
-member	会员表
-course	课程表
-booking	预约表
-equipment	器材设备表
-fitness_data	健身数据表
-feedback	评价反馈表
-notice	公告表
-orders	订单表
-sys_log	系统日志表
+|表名	|说明|
+|------|------|
+|admin|	管理员表|
+|coach	|教练表|
+|member	|会员表|
+|course	|课程表|
+|booking	|预约表|
+|equipment	|器材设备表|
+|fitness_data|	健身数据表|
+|feedback	|评价反馈表|
+|notice	|公告表|
+|orders|	订单表|
+|sys_log|	系统日志表|
 
 
 ## 许可证
